@@ -1,0 +1,18 @@
+---
+services:
+- name: serviceA
+  env: dev
+  owner: walterwhite
+  type: VM
+- name: ServiceB
+  env: staging
+  owner: jessepinkman
+  type: VM
+- name: ServiceC
+  env: preprd
+  owner: skylergrey
+  type: VM
+
+
+
+
