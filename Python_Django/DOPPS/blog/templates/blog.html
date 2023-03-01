@@ -17,8 +17,12 @@
                 <div class="card-body">
                   <h5 class="card-title">{{post.title}} <br><small>by {{post.author}}</small></h5>
                   <p class="card-text">{{post.content| truncatechars:210}}</p>
+                  {% if post.author == user %}
+                  <a href="blog/{{post.slug}}" class="btn btn-primary">Read More<a href="delete_blog_post/{{post.slug}}/" class="btn btn-danger mx-4">Delete Blog</a></a>
+                  {% else %}
                   <a href="blog/{{post.slug}}" class="btn btn-primary">Read More {% if user.is_superuser %}<a href="delete_blog_post/{{post.slug}}/" class="btn btn-danger mx-4">Delete Blog</a>{% endif %}</a>
-                </div>
+                  {% endif %}
+                  </div>
               </div>
         </div>
         {% endfor %}
