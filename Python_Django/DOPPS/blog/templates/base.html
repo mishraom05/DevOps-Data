@@ -31,11 +31,24 @@
               <li class="nav-item">
                 <a class="nav-link {% block add_blogs_active %} {% endblock add_blogs_active %}" href="/add_blogs/">Add Blogs</a>
               </li>
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a class="nav-link {% block profileactive %} {% endblock profileactive %}" href="/profile/">Profile</a>
-              </li>
+              </li> -->
               <li class="nav-item">
                 <a class="nav-link" href="/logout/">Logout</a>
+              </li>
+              <li>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              </li>
+              <li>
+              <a class="nav-link active" href="/profile/">Hi {{request.user}}</a>
               </li>
               {% else %}
               <li class="nav-item">
@@ -47,11 +60,6 @@
               {% endif %}
             </ul>
             </div>
-              {%  if user.is_authenticated %}
-              <li class="nav-item">
-               <a class="nav-link active" href="#">Hi {{request.user}}</a>
-              </li>
-              {% endif %}
             <form class="d-flex" method="POST" action="/search/"> {% csrf_token %}
               <input class="form-control me-2" type="search" placeholder="Search" name="searched" id="searched" aria-label="Search">
               <button href="/search/" class="btn btn-outline-secondary" type="submit">Search</button>
