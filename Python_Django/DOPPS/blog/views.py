@@ -46,6 +46,10 @@ def add_blogs(request):
         form = BlogPostForm(data=request.POST, files=request.FILES)
         if form.is_valid():
             blogpost = form.save(commit=False)
+            # Adding slug generator
+            slug_val = blogpost.title
+            slug_val = slug_val.replace(" ","-")
+            blogpost.slug = slug_val
             blogpost.author = request.user
             blogpost.save()
             obj = form.instance
