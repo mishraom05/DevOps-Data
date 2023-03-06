@@ -69,10 +69,6 @@ def user_profile(request, myid):
     return render(request, "user_profile.html", {'post':post})
 
 def profile_view(request):
-    profiles = Profile.objects.all().filter()
-    for profile in profiles:
-        print("====", profile.user)
-    # return render(request, "profile.html", {'profiles':profiles})
     return render(request, "profile.html",)
 
 def edit_profile(request):
@@ -84,16 +80,12 @@ def edit_profile(request):
     if request.method=="POST":
         form = ProfileForm(data=request.POST, files=request.FILES, instance=profile)
         if form.is_valid():
-            data= form.cleaned_data.get("user")
-            print("data:", data)
             form.save()
-            print("form saved!")
             obj = form.instance
             alert = True
             return render(request, "edit_profile.html", {'obj':obj, 'alert':alert})
     else:
         form=ProfileForm(instance=profile)
-        print("--",profile)
     return render(request, "edit_profile.html", {'form':form},)
 
 def Register(request):
