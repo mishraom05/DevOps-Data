@@ -1,0 +1,29 @@
+{% extends 'blog_comments.html' %}
+
+{% block title %} Edit Blog Comment {% endblock %}
+
+{% block css %}
+{% endblock %}
+{% load humanize %}
+{% block body %}    
+{% for comment in comments %}
+                  <div class="card">
+                        <div class="card-header">
+                              <span style="font-size: 22px;">{{comment.user}} </span> <span
+                                    style="font-size: 12px;">{{comment.dateTime | naturaltime}}</span>
+                        </div>
+                        <form enctype="multipart/form-data" method="POST"> {% csrf_token %}
+                        <div class="card-body">
+                            <textarea class="form-control" placeholder="" id="floatingTextarea2"
+                            style="height: 70px" id="content" name="content">{{comment.content}}</textarea>
+                            <br>
+                            <button class="btn btn-danger">Delete</button>
+                            <a href="/blog/{{slug}}/" class="btn btn-secondary">Cancel</a>
+                        </div>
+                        </form>
+                 </div>
+{% endfor %}
+{% endblock %}
+
+
+

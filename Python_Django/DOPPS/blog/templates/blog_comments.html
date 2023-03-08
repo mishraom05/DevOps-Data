@@ -63,10 +63,21 @@ float: right;
                         <div class="card-body">
                               <h6 class="card-text">{{comment.content}}</h6>
                         </div>
+                        <form action="/blog/{{post.slug}}/" method="POST"> {% csrf_token %}
+                        {% if user == comment.user %}
+                        <div class="card-footer">
+                              <span><a href="/blog/{{post.slug}}/{{comment.id}}/edit_blogs_comment" style="font-size: 12px; color: #0000FF;">Edit</a></span> 
+                              <span><a href="/blog/{{post.slug}}/{{comment.id}}/delete_blogs_comment" style="font-size: 12px; color: #ff0000e6;">Delete</a></span>
+                        </div>
+                        {% endif %}
+                        </form>
                   </div>
                   <br>
                   {% endfor %}
             </div>
+            
       </div>
-
       {% endblock %}
+      
+
+

@@ -12,6 +12,10 @@ urlpatterns = [
     path("delete_blog_post/<str:slug>/", views.Delete_Blog_Post, name="delete_blog_post"),
     path("search/", views.search, name="search"),
 
+    #blogs_comments
+    path("blog/<str:slug>/<int:cid>/edit_blogs_comment", views.edit_comments, name="edit_blogs_comment"),
+    path("blog/<str:slug>/<int:cid>/delete_blogs_comment", views.delete_comments, name="delete_blogs_comment"),
+
     #profile
     path("profile/", views.profile_view, name="profile"),
     path("edit_profile/", views.edit_profile, name="edit_profile"),

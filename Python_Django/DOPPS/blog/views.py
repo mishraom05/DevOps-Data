@@ -20,11 +20,36 @@ def blogs_comments(request, slug):
     if request.method=="POST":
         user = request.user
         content = request.POST.get('content','')
-        print(content)
-        #blog_id =request.POST.get(id,'')
+        blog_id =request.POST.get(id,'')
         comment = Comment(user = user, content = content, blog=post)
         comment.save()
     return render(request, "blog_comments.html", {'post':post, 'comments':comments}) 
+
+# Editing the comment
+
+def edit_comments(request, slug, cid):
+    post = BlogPost.objects.filter(slug=slug).first()
+    comments = Comment.objects.filter(id=cid)
+    if request.method=="POST":
+        content = request.POST.get('content','')
+        for comment in comments:
+            comment.content = content
+            comment.save()
+        new_comments = Comment.objects.filter(blog=post)
+        return render(request, "blog_comments.html", {'post':post, 'comments':new_comments})
+    return render(request, 'edit_blogs_comment.html', {'slug':slug,'comments':comments})
+        
+# Deleting the comment
+
+def delete_comments(request, slug, cid):
+    post = BlogPost.objects.filter(slug=slug).first()
+    comments = Comment.objects.filter(id=cid)
+    if request.method=="POST":
+        for comment in comments:
+            comment.delete()
+        new_comments = Comment.objects.filter(blog=post)
+        return render(request, "blog_comments.html", {'post':post, 'comments':new_comments})
+    return render(request, 'delete_blogs_comment.html', {'slug':slug,'comments':comments})
 
 def Delete_Blog_Post(request, slug):
     posts = BlogPost.objects.get(slug=slug)
