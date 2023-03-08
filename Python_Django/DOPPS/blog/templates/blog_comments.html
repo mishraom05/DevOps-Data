@@ -18,7 +18,7 @@ float: right;
                   alt="image">
             {% endif %}
             <div class="media-body">
-                  <h5 class="mt-0"><a href="/user_profile/{{post.author.id}}/">{{post.author}}
+                  <h5 class="mt-0"><a href="/profile/">{{post.author}}
                               {% if user.is_authenticated %}
                               {% if user.id == post.author.id %}
                               <small><a href="/edit_blog_post/{{post.slug}}/" class="edit btn btn-warning">Edit Blog Post</a></small>
@@ -31,7 +31,9 @@ float: right;
       <br>
       <img src="/media/{{post.image}}" alt="" height="250px" width="375px">
       <br>
-      <p>{{post.content}}.</p>
+      <div>
+           {{post.content|linebreaks}}
+      </div>
       <hr>
       {% if user.is_authenticated %}
       <div class="container">

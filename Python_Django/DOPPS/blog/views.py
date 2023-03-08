@@ -20,7 +20,8 @@ def blogs_comments(request, slug):
     if request.method=="POST":
         user = request.user
         content = request.POST.get('content','')
-        blog_id =request.POST.get('blog_id','')
+        print(content)
+        #blog_id =request.POST.get(id,'')
         comment = Comment(user = user, content = content, blog=post)
         comment.save()
     return render(request, "blog_comments.html", {'post':post, 'comments':comments}) 
