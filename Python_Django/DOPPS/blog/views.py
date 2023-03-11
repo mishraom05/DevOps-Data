@@ -20,10 +20,36 @@ def blogs_comments(request, slug):
     if request.method=="POST":
         user = request.user
         content = request.POST.get('content','')
-        blog_id =request.POST.get('blog_id','')
+        blog_id =request.POST.get(id,'')
         comment = Comment(user = user, content = content, blog=post)
         comment.save()
     return render(request, "blog_comments.html", {'post':post, 'comments':comments}) 
+
+# Editing the comment
+
+def edit_comments(request, slug, cid):
+    post = BlogPost.objects.filter(slug=slug).first()
+    comments = Comment.objects.filter(id=cid)
+    if request.method=="POST":
+        content = request.POST.get('content','')
+        for comment in comments:
+            comment.content = content
+            comment.save()
+        new_comments = Comment.objects.filter(blog=post)
+        return render(request, "blog_comments.html", {'post':post, 'comments':new_comments})
+    return render(request, 'edit_blogs_comment.html', {'slug':slug,'comments':comments})
+        
+# Deleting the comment
+
+def delete_comments(request, slug, cid):
+    post = BlogPost.objects.filter(slug=slug).first()
+    comments = Comment.objects.filter(id=cid)
+    if request.method=="POST":
+        for comment in comments:
+            comment.delete()
+        new_comments = Comment.objects.filter(blog=post)
+        return render(request, "blog_comments.html", {'post':post, 'comments':new_comments})
+    return render(request, 'delete_blogs_comment.html', {'slug':slug,'comments':comments})
 
 def Delete_Blog_Post(request, slug):
     posts = BlogPost.objects.get(slug=slug)
@@ -46,6 +72,10 @@ def add_blogs(request):
         form = BlogPostForm(data=request.POST, files=request.FILES)
         if form.is_valid():
             blogpost = form.save(commit=False)
+            # Adding slug generator
+            slug_val = blogpost.title
+            slug_val = slug_val.replace(" ","-")
+            blogpost.slug = slug_val
             blogpost.author = request.user
             blogpost.save()
             obj = form.instance
@@ -64,23 +94,25 @@ def user_profile(request, myid):
     post = BlogPost.objects.filter(id=myid)
     return render(request, "user_profile.html", {'post':post})
 
-def Profile(request):
-    return render(request, "profile.html")
+def profile_view(request):
+    return render(request, "profile.html",)
 
 def edit_profile(request):
     try:
         profile = request.user.profile
     except Profile.DoesNotExist:
         profile = Profile(user=request.user)
+    print(profile)
     if request.method=="POST":
         form = ProfileForm(data=request.POST, files=request.FILES, instance=profile)
         if form.is_valid():
             form.save()
+            obj = form.instance
             alert = True
-            return render(request, "edit_profile.html", {'alert':alert})
+            return render(request, "edit_profile.html", {'obj':obj, 'alert':alert})
     else:
         form=ProfileForm(instance=profile)
-    return render(request, "edit_profile.html", {'form':form})
+    return render(request, "edit_profile.html", {'form':form},)
 
 def Register(request):
     if request.method=="POST":   
@@ -95,12 +127,14 @@ def Register(request):
             messages.error(request, "Passwords do not match.")
             return redirect('/register')
  
-        user = User.objects.create_user(username, email, password1)
+        user = User.objects.create_user(username, email, password1,)
         user.first_name = first_name
         user.last_name = last_name
         user.save()
         return render(request, 'login.html')  
-    return render(request, "register.html")
+    else:
+        return render(request, "register.html")
+
 
 def Login(request):
     if request.method=="POST":
